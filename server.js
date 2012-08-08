@@ -24,14 +24,22 @@ var client = new Buffer(
 browServer.on("connection", function(client) {
   var hostname = client.id + ".clients.browserver.org"
 
-  var req = http.request({
+  var opts = {
     method: "PUT",
     port: process.env.PORT,
     path: "/localhost"
+  }
+
+  var req = http.request(opts, function(res) {
+    console.log(res.statusCode)
   })
 
   req.write(hostname)
   req.end()
+
+  req.on("error", function(err) {
+    console.log(err)
+  })
 })
 
 function onRequest(req, res) {
