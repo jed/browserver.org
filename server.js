@@ -26,6 +26,7 @@ browServer.on("connection", function(client) {
 
   var opts = {
     method: "PUT",
+    headers: {host: hostname},
     port: process.env.PORT,
     path: "/localhost"
   }
