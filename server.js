@@ -22,6 +22,7 @@ var client = new Buffer(
 )
 
 browServer.on("connection", function(client) {
+  console.log(client.id)
   // var hostname = client.id + ".localhost.browserver.org:8001"
 
   // var req = http.request({
