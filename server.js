@@ -7,7 +7,11 @@ var engine     = require("engine.io")
 
 var httpServer = http.createServer(onRequest)
 var wsServer   = engine.attach(httpServer)
-var browServer = new brow.Server({ws: wsServer, http: httpServer})
+var browServer = new brow.Server({
+  http: httpServer,
+  ws: wsServer,
+  host: "*.clients.browserver.org"
+})
 
 var client = new Buffer(
   "<!doctype html>\n" +
