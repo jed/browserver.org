@@ -43,6 +43,8 @@ browServer.on("connection", function(client) {
 })
 
 function onRequest(req, res) {
+  console.log(req.method, req.url, req.headers)
+
   if (req.url == "/") {
     res.writeHead(200, {
       "Content-Type": "text/html; charset=utf8",
