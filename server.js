@@ -26,6 +26,7 @@ browServer.on("connection", function(client) {
 
   var req = http.request({
     method: "PUT",
+    port: 80,
     host: client.id + ".clients.browserver.org",
     path: "/localhost"
   })
