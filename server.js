@@ -22,17 +22,17 @@ var client = new Buffer(
 )
 
 browServer.on("connection", function(client) {
-  var hostname = client.id + ".localhost.browserver.org:8001"
+  // var hostname = client.id + ".localhost.browserver.org:8001"
 
-  var req = http.request({
-    method: "PUT",
-    port: 8001,
-    host: client.id + ".localhost.browserver.org",
-    path: "/localhost"
-  })
+  // var req = http.request({
+  //   method: "PUT",
+  //   port: 8001,
+  //   host: client.id + ".localhost.browserver.org",
+  //   path: "/localhost"
+  // })
 
-  req.write(hostname)
-  req.end()
+  // req.write(hostname)
+  // req.end()
 })
 
 function onRequest(req, res) {
