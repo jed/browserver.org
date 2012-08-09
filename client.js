@@ -72,6 +72,10 @@
 
           CSS("p", {
             fontFamily: "'Open Sans', sans-serif",
+          }),
+
+          CSS("textarea", {
+            width: "100%"
           })
         )
       ),
@@ -93,15 +97,15 @@
 
           DIV({}, A({href: "http://" + data.host}, "http://" + data.host)),
 
-          INPUT({type: "text"},
+          TEXTAREA(
             "curl " + data.host + "/ask?q=" + encodeURIComponent("What is your name?") + " | say"
           ),
 
-          INPUT({type: "text"},
+          TEXTAREA(
             "curl " + data.host + "/geolocation"
           ),
 
-          INPUT({type: "text"},
+          TEXTAREA(
             "curl -X POST " + data.host + "/rickroll"
           ),
 
@@ -112,10 +116,8 @@
           ),
 
           TEXTAREA(
-            "curl -X PATCH " + data.host + "/style \\",
-            BR({}),
-            "  -d color=transparent \\",
-            BR({}),
+            "curl -X PATCH " + data.host + "/style \\\n",
+            "  -d color=transparent \\\n",
             "  -d text-shadow=\"0 0 5px rgba(0,0,0,0.5)\""
           )
         )
