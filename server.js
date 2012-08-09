@@ -10,7 +10,7 @@ var wsServer   = engine.attach(httpServer)
 var browServer = new brow.Server({
   http: httpServer,
   ws: wsServer,
-  host: "*.clients.browserver.org"
+  host: "*.browserver.org"
 })
 
 var client = new Buffer(
@@ -26,7 +26,7 @@ var client = new Buffer(
 )
 
 browServer.on("connection", function(client) {
-  var hostname = client.id + ".clients.browserver.org"
+  var hostname = client.id + ".browserver.org"
 
   var opts = {
     method: "PUT",
