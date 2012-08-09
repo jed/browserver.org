@@ -44,7 +44,7 @@
           }),
 
           CSS("#container", {
-            fontSize: "1.25em",
+            fontSize: "1.5em",
             width: 700,
             margin: "0 auto"
           }),
@@ -72,7 +72,6 @@
 
           CSS("p", {
             fontFamily: "'Open Sans', sans-serif",
-            fontSize: "1.3em"
           })
         )
       ),
@@ -94,15 +93,15 @@
 
           DIV({}, A({href: "http://" + data.host}, "http://" + data.host)),
 
-          PRE(
+          INPUT({type: "text"},
             "curl " + data.host + "/ask?q=" + encodeURIComponent("What is your name?") + " | say"
           ),
 
-          PRE(
+          INPUT({type: "text"},
             "curl " + data.host + "/geolocation"
           ),
 
-          PRE(
+          INPUT({type: "text"},
             "curl -X POST " + data.host + "/rickroll"
           ),
 
@@ -112,7 +111,7 @@
             "your terminal:"
           ),
 
-          PRE(
+          TEXTAREA(
             "curl -X PATCH " + data.host + "/style \\",
             BR({}),
             "  -d color=transparent \\",
