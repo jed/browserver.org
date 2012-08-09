@@ -95,7 +95,7 @@
           DIV({}, A({href: "http://" + data.host}, "http://" + data.host)),
 
           PRE(
-            "say `curl " + data.host + "/ask?q=" + encodeURIComponent("What is your name?") + "`"
+            "curl " + data.host + "/ask?q=" + encodeURIComponent("What is your name?") + " | say"
           ),
 
           PRE(
