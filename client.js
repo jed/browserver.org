@@ -2,8 +2,6 @@
   var ws = new eio.Socket({host: location.hostname, port: location.port})
 
   var server = http.createServer(function(req, res) {
-    console.log(req)
-
     var parts = req.url.split("?")
 
     req.pathname = parts[0]
@@ -46,7 +44,8 @@
           }),
 
           CSS("#container", {
-            width: 800,
+            fontSize: "1.25em",
+            width: 700,
             margin: "0 auto"
           }),
 

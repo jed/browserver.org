@@ -35,21 +35,12 @@ browServer.on("connection", function(client) {
     path: "/localhost"
   }
 
-  var req = http.request(opts, function(res) {
-    console.log(res.statusCode)
-  })
-
+  var req = http.request(opts)
   req.write(hostname)
   req.end()
-
-  req.on("error", function(err) {
-    console.log(err)
-  })
 })
 
 function onRequest(req, res) {
-  console.log(req.method, req.url, req.headers)
-
   if (req.url == "/") {
     res.writeHead(200, {
       "Content-Type": "text/html; charset=utf8",
