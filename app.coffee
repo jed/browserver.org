@@ -94,7 +94,7 @@ render = ({host}) ->
             -d text-shadow='0 0 5px rgba(0,0,0,0.5)'
         """
 
-      PRE class: "well",
+      PRE class: "well", id: "roll"
         "curl -X POST #{host}/roll"
 
       P "Here's what just happened:"
@@ -250,13 +250,19 @@ server.routes =
 
   "/roll":
     POST: (req, res) ->
-      if open "http://www.youtube.com/watch?v=oHg5SJYRHA0"
-        res.writeHead 204
-        res.end ""
+      rollEl = document.getElementById "roll"
 
-      else
-        res.writeHead 403, "Content-Type": "text/plain"
-        res.end "Forbidden"
+      iframe = IFRAME
+        width: "420"
+        height: "315"
+        src: "http://www.youtube.com/embed/oHg5SJYRHA0"
+        frameborder: "0"
+        allowfullscreen: true
+
+      roll.parentNode.replaceChild iframe, roll
+
+      res.writeHead 204
+      res.end ""
 
 ws = new eio.Socket host: "browserver.org"
 server.listen ws
