@@ -55,7 +55,6 @@ browServer.on "connection", (client) ->
   opts =
     method: "PUT"
     headers: {host}
-    port: process.env.PORT
     path: "/localhost"
 
   req = http.request opts
