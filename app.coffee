@@ -259,7 +259,7 @@ server.routes =
         frameborder: "0"
         allowfullscreen: true
 
-      roll.parentNode.replaceChild iframe, roll
+      rollEl.parentNode.replaceChild iframe, rollEl
 
       res.writeHead 204
       res.end ""
