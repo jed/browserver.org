@@ -66,5 +66,4 @@ browServer.on "connection", (client) ->
 httpServer.listen process.env.PORT, ->
   console.log "now running at http://localhost:#{@address().port}/"
 
-process.on "uncaughtException", (err) ->
-  console.log "Caught exception: #{err}"
+process.on "uncaughtException", console.log
