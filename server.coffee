@@ -24,7 +24,9 @@ client = Buffer """
   #{clientLibs.app}
   </script>
   </head>
-  <body>Loading the app... If this message doesn't go away within 10 seconds, it means that the server crashed under heavy load. Please refresh mercilessly.</body>
+  <body style="background-color:#eee">
+    Loading the app... If this message doesn't go away within 10 seconds, it means that the server crashed under heavy load. Please refresh mercilessly.
+  </body>
   </html>
 """
 
