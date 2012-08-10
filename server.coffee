@@ -52,7 +52,7 @@ browServer = new brow.Server
   host: "*.browserver.org"
 
 browServer.on "connection", (client) ->
-  console.log "#{Object.keys this.clients} connected."
+  console.log "#{Object.keys(this.clients).length} connected."
 
   client.on "error", console.log
 
