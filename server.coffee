@@ -2,24 +2,25 @@ http   = require "http"
 fs     = require "fs"
 brow   = require "brow"
 engine = require "engine.io"
+coffee = require "coffee-script"
+
+appCoffee = fs.readFileSync "#{__dirname}/app.coffee", "utf8"
 
 clientLibs =
-  coffee:     fs.readFileSync "#{__dirname}/lib/coffee-script.js"
   engine:     fs.readFileSync "#{__dirname}/node_modules/engine.io-client/dist/engine.io.js"
   domo:       fs.readFileSync "#{__dirname}/lib/domo.js"
   browserver: fs.readFileSync "#{__dirname}/node_modules/brow-client/browserver.js"
-  app:        fs.readFileSync "#{__dirname}/app.coffee"
+  app:        coffee.compile appCoffee
 
 client = Buffer """
   <!doctype html>
   <html>
   <head>
   <title>෴ browserver: a node.js HTTP server, in your browser</title>
-  <script>#{clientLibs.coffee}</script>
   <script>#{clientLibs.engine}</script>
   <script>#{clientLibs.domo}</script>
   <script>#{clientLibs.browserver}</script>
-  <script type="text/coffeescript">
+  <script>
   #{clientLibs.app}
   </script>
   </head>
