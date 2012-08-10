@@ -54,12 +54,18 @@ browServer = new brow.Server
   host: "*.browserver.org"
 
 browServer.on "connection", (client) ->
-  console.log "#{Object.keys(this.clients).length} connected."
+  count = Object.keys(this.clients).length
+
+  console.log "Client #{client.id} connected (total count: #{count})"
 
   client.socket.on "timeout", ->
     console.log "client timeout", client
 
   client.on "error", console.log
+
+  client.socket.on "close", =>
+    count = Object.keys(this.clients).length
+    console.log "Client #{client.id} disconnected (total count: #{count})"
 
   host = "#{client.id}.browserver.org"
 
