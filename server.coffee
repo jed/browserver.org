@@ -23,7 +23,7 @@ client = Buffer """
   #{clientLibs.app}
   </script>
   </head>
-  <body>LOADING...</body>
+  <body>Loading the app... If this message doesn't go away within 10 seconds, it means that the server crashed under heavy load. Please refresh mercilessly.</body>
   </html>
 """
 
