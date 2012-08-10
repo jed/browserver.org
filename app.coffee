@@ -94,7 +94,7 @@ render = ({host}) ->
             -d text-shadow='0 0 5px rgba(0,0,0,0.5)'
         """
 
-      PRE class: "well", id: "roll"
+      PRE class: "well", id: "roll",
         "curl -X POST #{host}/roll"
 
       P "Here's what just happened:"
