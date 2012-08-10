@@ -15,8 +15,6 @@ client = Buffer """
   <html>
   <head>
   <title>෴ browserver: a node.js HTTP server, in your browser</title>
-  </head>
-  <body>
   <script>#{clientLibs.coffee}</script>
   <script>#{clientLibs.engine}</script>
   <script>#{clientLibs.domo}</script>
@@ -24,7 +22,8 @@ client = Buffer """
   <script type="text/coffeescript">
   #{clientLibs.app}
   </script>
-  </body>
+  </head>
+  <body>LOADING...</body>
   </html>
 """
 

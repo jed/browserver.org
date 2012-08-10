@@ -150,7 +150,7 @@ render = ({host}) ->
         A href: "https://github.com/jed/browserver-client", "browserver client"
         "."
 
-      SMALL marginTop: 100,
+      SMALL style: "margin-top: 100;",
         "browserver was brought to you by "
         A href: "https://github.com/jed", "Jed Schmidt"
         "."
