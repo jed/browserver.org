@@ -8,7 +8,7 @@ appCoffee = fs.readFileSync "#{__dirname}/app.coffee", "utf8"
 
 clientLibs =
   engine:     fs.readFileSync "#{__dirname}/node_modules/engine.io-client/dist/engine.io.js"
-  domo:       fs.readFileSync "#{__dirname}/lib/domo.js"
+  domo:       fs.readFileSync "#{__dirname}/domo.js"
   browserver: fs.readFileSync "#{__dirname}/node_modules/brow-client/browserver.js"
   app:        coffee.compile appCoffee
 
