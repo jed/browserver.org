@@ -56,9 +56,8 @@ browServer = new brow.Server
 browServer.on "connection", (client) ->
   console.log "#{Object.keys(this.clients).length} connected."
 
-  client.socket.on("timeout", function() {
-    console.log("client timeout", client)
-  })
+  client.socket.on "timeout", ->
+    console.log "client timeout", client
 
   client.on "error", console.log
 
