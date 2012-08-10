@@ -253,10 +253,10 @@ server.routes =
       rollEl = document.getElementById "roll"
 
       iframe = IFRAME
-        width: "420"
-        height: "315"
-        src: "http://www.youtube.com/embed/oHg5SJYRHA0"
-        frameborder: "0"
+        width: 600
+        height: 450
+        src: "http://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&rel=0"
+        frameborder: 0
         allowfullscreen: true
 
       rollEl.parentNode.replaceChild iframe, rollEl
