@@ -52,6 +52,8 @@ browServer = new brow.Server
   host: "*.browserver.org"
 
 browServer.on "connection", (client) ->
+  client.on "error", console.log
+
   host = "#{client.id}.browserver.org"
 
   opts =
