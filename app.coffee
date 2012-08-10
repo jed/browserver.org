@@ -89,8 +89,8 @@ render = ({host}) ->
 
       PRE class: "well", id: "blurry",
         """
-          curl -X PATCH #{host}/style \
-            -d color=transparent \
+          curl -X PATCH #{host}/style \\
+            -d color=transparent \\
             -d text-shadow='0 0 5px rgba(0,0,0,0.5)'
         """
 
