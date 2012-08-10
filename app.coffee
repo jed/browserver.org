@@ -150,7 +150,12 @@ render = ({host}) ->
         A href: "https://github.com/jed/browserver-client", "browserver client"
         "."
 
-      SMALL style: "text-align: center;",
+      BR()
+      BR()
+      BR()
+      BR()
+
+      SMALL {},
         "browserver was brought to you by "
         A href: "https://github.com/jed", "Jed Schmidt"
         "."

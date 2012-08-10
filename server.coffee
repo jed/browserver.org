@@ -18,8 +18,6 @@ client = Buffer """
   <title>෴ browserver: a node.js HTTP server, in your browser</title>
   </head>
   <body>
-  <script>#{clientLibs.spin}</script>
-  <script>document.body.appendChild(new Spinner().spin().el)</script>
   <script>#{clientLibs.coffee}</script>
   <script>#{clientLibs.engine}</script>
   <script>#{clientLibs.domo}</script>
