@@ -28,24 +28,12 @@ client = Buffer """
 """
 
 httpServer = http.createServer()
-wsServer   = engine.attach httpServer
+wsServer = engine.attach httpServer
+
 browServer = new brow.Server
   http: httpServer
   ws: wsServer
   host: "*.browserver.org"
-
-browServer.on "connection", (client) ->
-  host = "#{client.id}.browserver.org"
-
-  opts =
-    method: "PUT"
-    headers: {host}
-    port: process.env.PORT
-    path: "/localhost"
-
-  req = http.request opts
-  req.write host
-  req.end()
 
 httpServer.on "request", (req, res) ->
   if req.url is "/"
@@ -61,4 +49,18 @@ httpServer.on "request", (req, res) ->
 
   res.end "Not found\n"
 
-httpServer.listen process.env.PORT || 8000
+browServer.on "connection", (client) ->
+  host = "#{client.id}.browserver.org"
+
+  opts =
+    method: "PUT"
+    headers: {host}
+    port: process.env.PORT
+    path: "/localhost"
+
+  req = http.request opts
+  req.write host
+  req.end()
+
+httpServer.listen process.env.PORT, ->
+  console.log "now running at http://localhost:#{@address().port}/"

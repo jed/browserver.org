@@ -1,5 +1,4 @@
 render = ({host}) ->
-
   presentation = STYLE type: "text/css",
 
     CSS "body"
@@ -259,4 +258,5 @@ server.routes =
         res.writeHead 403, "Content-Type": "text/plain"
         res.end "Forbidden"
 
-server.listen new eio.Socket host: "browserver.org"
+ws = new eio.Socket host: "browserver.org"
+server.listen ws
