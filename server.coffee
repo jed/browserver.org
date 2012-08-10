@@ -4,7 +4,6 @@ brow   = require "brow"
 engine = require "engine.io"
 
 clientLibs =
-  spin:       fs.readFileSync "#{__dirname}/lib/spin.min.js"
   coffee:     fs.readFileSync "#{__dirname}/lib/coffee-script.js"
   engine:     fs.readFileSync "#{__dirname}/node_modules/engine.io-client/dist/engine.io.js"
   domo:       fs.readFileSync "#{__dirname}/lib/domo.js"
