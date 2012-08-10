@@ -28,12 +28,6 @@ client = Buffer """
 """
 
 httpServer = http.createServer()
-wsServer = engine.attach httpServer
-
-browServer = new brow.Server
-  http: httpServer
-  ws: wsServer
-  host: "*.browserver.org"
 
 httpServer.on "request", (req, res) ->
   if req.url is "/"
@@ -48,6 +42,13 @@ httpServer.on "request", (req, res) ->
     "Content-Length": 10
 
   res.end "Not found\n"
+
+wsServer = engine.attach httpServer
+
+browServer = new brow.Server
+  http: httpServer
+  ws: wsServer
+  host: "*.browserver.org"
 
 browServer.on "connection", (client) ->
   host = "#{client.id}.browserver.org"
