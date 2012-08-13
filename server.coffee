@@ -58,9 +58,6 @@ browServer.on "connection", (client) ->
 
   console.log "Client #{client.id} connected (total count: #{count})"
 
-  client.socket.on "timeout", ->
-    console.log "client timeout", client
-
   client.on "error", console.log
 
   client.socket.on "close", =>
