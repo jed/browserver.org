@@ -53,8 +53,6 @@ render = ({host}) ->
           "෴"
         H1 "browserver"
 
-      SMALL "(Hey all! I'm currently getting Hacker News'ed, so if this doesn't work for you the first time, please refresh and try again.)"
-
       P {},
         "Hello! I've got some good news for you: your web browser has just been upgraded to a web "
         EM "server"
