@@ -70,5 +70,5 @@ httpServer.listen 80, ->
 
   console.log "now running at http://#{address}:#{port}/"
 
-# process.on "uncaughtException", (err) ->
-#   console.error err.message, err.stack
+process.on "uncaughtException", (err) ->
+  console.error err.message, err.stack
