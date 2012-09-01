@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
+2 info using npm@1.1.59
+3 info using node@v0.8.8
+4 verbose read json /Users/jed/code/browserver.org/package.json
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart browserver.org@0.0.2
+7 info start browserver.org@0.0.2
+8 verbose unsafe-perm in lifecycle true
+9 silly exec sh "-c" "coffee server.coffee"
+10 silly sh,-c,coffee server.coffee,/Users/jed/code/browserver.org spawning
+11 info browserver.org@0.0.2 Failed to exec start script
+12 error browserver.org@0.0.2 start: `coffee server.coffee`
+12 error `sh "-c" "coffee server.coffee"` failed with 1
+13 error Failed at the browserver.org@0.0.2 start script.
+13 error This is most likely a problem with the browserver.org package,
+13 error not with npm itself.
+13 error Tell the author that this fails on your system:
+13 error     coffee server.coffee
+13 error You can get their info via:
+13 error     npm owner ls browserver.org
+13 error There is likely additional logging output above.
+14 error System Darwin 12.1.0
+15 error command "node" "/usr/local/bin/npm" "start"
+16 error cwd /Users/jed/code/browserver.org
+17 error node -v v0.8.8
+18 error npm -v 1.1.59
+19 error code ELIFECYCLE
+20 verbose exit [ 1, true ]

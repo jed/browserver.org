@@ -1,53 +1,62 @@
 render = ({host}) ->
-  presentation = STYLE type: "text/css",
+  dom =
 
-    CSS "body"
-      backgroundColor: "#eee"
-      color: "#333"
-      fontFamily: "'Merriweather', serif"
-      fontSize: "130%"
-      lineHeight: "150%"
+  HTML lang: "en",
+    HEAD {},
+      TITLE "෴ browserver: a node.js HTTP server in your browser ෴"
 
-    CSS "a"
-      color: "#C90707"
+      LINK
+        href: "//fonts.googleapis.com/css?family=Merriweather:400,900"
+        rel:  "stylesheet"
+        type: "text/css"
 
-    CSS ".hostlink"
-      textAlign: "center"
+      STYLE type: "text/css",
+        CSS "body"
+          backgroundColor: "#eee"
+          color: "#333"
+          fontFamily: "'Merriweather', serif"
+          fontSize: "130%"
+          lineHeight: "150%"
+          margin: "0 0 2em"
+          padding: 0
 
-    CSS "p, table, .hostlink, pre, li"
-      marginTop: "1em"
+        CSS ".header"
+          textAlign: "center"
+          marginTop: 120
+          marginBottom: 70
+          fontSize: 40
 
-    CSS ".container"
-      width: 600
-      margin: "50px auto"
+          CSS ".logo"
+            marginBottom: 100
+            fontSize: 300
 
-    CSS ".header"
-      textAlign: "center"
-      marginTop: 120
-      marginBottom: 70
+        CSS "h1, h2, h3, p, ul, ol, pre"
+          width: 600
+          margin: "1em auto"
 
-      CSS ".logo"
-        marginBottom: 100
-        fontSize: 300
+        CSS "a"
+          color: "#C90707"
+          fontWeight: "bold"
 
-      CSS "h1"
-        fontSize: 72
-        fontWeight: 900
+        CSS ".sub"
+          background: "#fff"
+          margin: ".5em 0 0"
+          padding: ".5em 0"
+          borderTop: "1px solid #ccc"
+          borderBottom: "1px solid #ccc"
 
-    CSS ".well"
-      borderRadius: 10
-      padding: 15
-      border: "2px solid #999"
-      backgroundColor: "#fff"
+        CSS "pre, code"
+          fontSize: "0.9em"
+          fontFamily: "Monaco, Courier New, monospace"
+          overflow: "hidden"
 
-  content = BODY {},
-    A href: "https://github.com/jed/browserver-client",
-      IMG
-        style: "position: absolute; top: 0; right: 0; border: 0;"
-        src: "https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"
-        alt: "Fork me on GitHub"
+    BODY {},
+      A href: "https://github.com/jed/browserver-client",
+        IMG
+          style: "position: absolute; top: 0; right: 0; border: 0;"
+          src: "https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"
+          alt: "Fork me on GitHub"
 
-    DIV class: "container",
       DIV class: "header",
         DIV class: "logo",
           "෴"
@@ -58,78 +67,89 @@ render = ({host}) ->
         EM "server"
         ". It's responding to HTTP requests on the Internet as you read this."
 
-      P "True story. You can try it yourself here:"
+      P "True story. Here's the last request that came in:"
 
-      DIV class: "hostlink well",
-        A
-          href: "http://#{host}"
-          target: "_blank"
+      DIV class: "sub",
+        PRE id: "lastRequest",
+          ""
 
-          "http://#{host}"
+      P "And here's the response your browser served:"
 
-      P "Well, truth be told, the link above only returns a 404. But it was served by this very browser. Here's a list of the few requests it's served so far:"
+      DIV class: "sub",
+        PRE id: "lastResponse",
+          ""
 
-      TABLE class: "well", width: "100%",
-        TBODY id: "requests",
-          TR {},
-            TD "1."
-            TD "PUT /localhost"
-            TD new Date().toLocaleTimeString()
+      P "Don't believe me? Just send any HTTP request to the following host, which is your browserver's own temporary address on the Internet:"
 
-      P "Still don't believe me? Open up your (OS X) terminal and try any of the following commands:"
+      DIV class: "sub",
+        PRE style: "text-align: center; font-size: 150%;",
+          host
 
-      PRE class: "well",
-        "curl #{host}/geolocation"
+      P {},
+        "Any requests sent to this host will be reverse-proxied via WebSocket by a "
+        A href: "https://github.com/jed/browserver-node", "browserver server"
+        " and handled by the "
+        A href: "https://github.com/jed/browserver-client", "browserver client"
+        " in this browser."
 
-      PRE class: "well",
-        """
-          BROWSERVER=#{host}
-          curl $BROWSERVER/prompt?q=#{encodeURIComponent 'Who are you?'} | say
-        """
+      H2 "Examples"
 
-      PRE class: "well", id: "blurry",
-        """
-          curl -X PATCH #{host}/style \\
-            -d color=transparent \\
-            -d text-shadow='0 0 5px rgba(0,0,0,0.5)'
-        """
+      P "Hit the following URL to redirect to a google map based on the location returned by your browser's geolocation functionality:"
 
-      PRE class: "well", id: "roll",
-        "curl -X POST #{host}/roll"
+      DIV class: "sub",
+        P style: "text-align: center;",
 
-      P "Here's what just happened:"
+          IMG
+            width: 300
+            height: 300
+            src: "http://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=http://#{host}/where"
 
-      OL {},
-        LI {},
-          "You used curl to request a resource from "
+          BR {}
 
           A
-            href: "http://#{host}"
+            href: "http://#{host}/where"
             target: "_blank"
-            host
 
-          "."
+            "http://#{host}/where"
 
-        LI {},
-          "A "
-          A href: "https://github.com/jed/browserver-node", "browserver server"
-          " received your request, and figured out that you wanted to talk to client "
-          EM host.split('.')[0]
-          ", which is actually your browser."
+      P "Or, enter a question to ask your browser here:"
 
-        LI {},
-          "The server then used an already-established websocket-like connection (thanks to "
-          A href: "https://github.com/learnboost/engine.io", "engine.io"
-          ") to forward the request."
+      P {},
+        INPUT
+          style: "width: 100%; font-size: 1.5em; text-align: center;"
+          id: "question"
+          type: "text"
+          value: "What is your name?"
+          onkeyup: """
+            var url = "http://#{host}/ask?q=" + encodeURIComponent(this.value)
+            var src = "http://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" + url
 
-        LI {},
-          "The "
-          A href: "https://github.com/jed/browserver-client", "browserver client"
-          " in this page responded, getting any necessary input from the browser (or from you). The server then forwarded this response back to you."
+            document.getElementById("questionImg").src = src
+            document.getElementById("questionAnchor").href = url
+            document.getElementById("questionAnchor").firstChild.nodeValue = url
+          """
 
-      P "In other words, the open-source browserver server and client worked together to give your browser a real address on the Internet."
+      P "And then hit the following URL to get the answer:"
 
-      P "So?"
+      DIV class: "sub",
+        P style: "text-align: center;",
+
+          IMG
+            id: "questionImg"
+            width: 300
+            height: 300
+            src: "http://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=http://#{host}/ask?q=What%20is%20your%20name%3F"
+
+          BR {}
+
+          A
+            id: "questionAnchor"
+            href: "http://#{host}/ask?q=What%20is%20your%20name%3F"
+            target: "_blank"
+
+            "http://#{host}/ask?q=What%20is%20your%20name%3F"
+
+      H2 "So, what this good for?"
 
       P "Well, this means that you don't need to roll your own custom code to connect the various pieces of your web architecture to your end clients."
 
@@ -149,80 +169,41 @@ render = ({host}) ->
         A href: "https://github.com/jed/browserver-client", "browserver client"
         "."
 
-      SMALL style: "margin-top: 100;",
-        "browserver was brought to you by "
-        A href: "https://github.com/jed", "Jed Schmidt"
-        "."
-
-  dom =
-    HTML lang: "en",
-      HEAD {},
-        TITLE "෴ browserver: a node.js HTTP server in your browser ෴"
-
-        LINK
-          href: "http://fonts.googleapis.com/css?family=Merriweather:400,900"
-          rel:  "stylesheet"
-          type: "text/css"
-
-        presentation
-
-      content
+      P {},
+        SMALL style: "margin-top: 100;",
+          "browserver was brought to you by "
+          A href: "https://github.com/jed", "Jed Schmidt"
+          "."
 
   document.replaceChild dom, document.documentElement
 
-server = http.createServer (req, res) ->
-  [pathname, search] = req.url.split "?"
+server = http.createServer()
 
-  if log = document.getElementById "requests"
-    log.appendChild TR {},
-      TD (log.childNodes.length + 1) + "."
-      TD "#{req.method} #{pathname}"
-      TD new Date().toLocaleTimeString()
+server.once "request", (req) ->
+  render host: req.headers.host
 
-  route = server.routes[pathname]
+server.on "request", (req, res) ->
+  msg = document.createTextNode req.serialize()
+  el = document.getElementById "lastRequest"
 
-  unless route
-    res.writeHead 404, "Content-Type": "text/plain"
-    return res.end "Not found. You should probably close this window."
+  el.replaceChild msg, el.firstChild
 
-  handler = route[req.method]
+  res.once "end", ->
+    msg = document.createTextNode res.serialize()
+    el = document.getElementById "lastResponse"
+    el.replaceChild msg, el.firstChild
 
-  unless handler
-    res.writeHead 405, "Content-Type": "text/plain"
-    return res.end "Method not allowed"
-
-  handler.call @, req, res
-
-server.routes =
-
-  "/localhost":
-    PUT: (req, res) ->
-      render host: req.body
-
-      res.writeHead 204
-      res.end ""
-
-  "/prompt":
-    GET: (req, res) ->
-      [pathname, search] = req.url.split "?"
-
-      match    = search.match /(?:^|&)q=(.+?)(?:$|&)/
-      question = match && decodeURIComponent match[1]
-      answer   = prompt question
-
-      res.writeHead 200, "Content-Type": "text/plain"
-      res.end "#{answer}\n"
-
-  "/geolocation":
+server.on "request", Router
+  "/where":
     GET: (req, res) ->
       if "geolocation" of navigator
         navigator.geolocation.getCurrentPosition(
           (position) ->
-            res.writeHead 200, "Content-Type": "text/plain"
-            res.end """
-              Latitude: #{position.coords.latitude}
-              Longitude: #{position.coords.longitude}
-            """
+            {latitude, longitude} = position.coords
+            url = "//maps.google.com/?q=#{latitude},#{longitude}"
+
+            res.writeHead 302, Location: url
+            res.end()
 
           ->
             res.writeHead 403, "Content-Type": "text/plain"
@@ -231,38 +212,29 @@ server.routes =
 
       else
         res.writeHead 501, "Content-Type": "text/plain"
-        return res.end "Not implemented"
+        res.end "Not implemented"
 
-  "/style":
-    PATCH: (req, res) ->
-      for style in req.body.split "&"
-        [name, value] = style.split "="
+  "/ask":
+    GET: (req, res) ->
+      [pathname, search] = req.url.split "?"
 
-        name = name.replace /-[a-z]/g, (str) ->
-          do str[1..].toUpperCase
+      match    = search.match /(?:^|&)q=(.+?)(?:$|&)/
+      question = match and decodeURIComponent match[1]
 
-        value = decodeURIComponent value
+      res.writeHead 200, "Content-Type": "text/html"
+      res.end """
+        <!doctype html>
+        <body style="margin: 2em; font-size: 3em; text-align: center">
+          #{prompt question}
+        </body>
+      """
 
-        document.getElementById("blurry").style[name] = value
-
-      res.writeHead 204
-      res.end ""
-
-  "/roll":
-    POST: (req, res) ->
-      rollEl = document.getElementById "roll"
-
-      iframe = IFRAME
-        width: 600
-        height: 450
-        src: "http://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&rel=0"
-        frameborder: 0
-        allowfullscreen: true
-
-      rollEl.parentNode.replaceChild iframe, rollEl
+  "/server-count":
+    PUT: (req, res) ->
+      if el = document.getElementById "browserverCount"
+        el.innerHTML = req.body
 
       res.writeHead 204
-      res.end ""
+      res.end()
 
-ws = new eio.Socket host: "browserver.org"
-server.listen ws
+server.listen new eio.Socket host: location.host

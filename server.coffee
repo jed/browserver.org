@@ -1,81 +1,74 @@
 http   = require "http"
 fs     = require "fs"
-brow   = require "brow"
+brow   = require "browserver"
 engine = require "engine.io"
 coffee = require "coffee-script"
+router = require "browserver-router"
 
-appCoffee = fs.readFileSync "#{__dirname}/app.coffee", "utf8"
+app = fs.readFileSync "#{__dirname}/app.coffee", "utf8"
 
-clientLibs =
-  engine:     fs.readFileSync "#{__dirname}/node_modules/engine.io-client/dist/engine.io.js"
-  domo:       fs.readFileSync "#{__dirname}/domo.js"
-  browserver: fs.readFileSync "#{__dirname}/node_modules/brow-client/browserver.js"
-  app:        coffee.compile appCoffee
+assets =
+  engine:      fs.readFileSync "#{__dirname}/node_modules/engine.io-client/dist/engine.io.js"
+  domo:        fs.readFileSync "#{__dirname}/domo.js"
+  browserver:  fs.readFileSync "#{__dirname}/node_modules/browserver/node_modules/browserver-client/browserver.js"
+  router:      fs.readFileSync "#{__dirname}/node_modules/browserver-router/index.js"
+  app:         coffee.compile app
 
 client = Buffer """
   <!doctype html>
   <html>
-  <head>
-  <title>෴ browserver: a node.js HTTP server, in your browser</title>
-  <script>#{clientLibs.engine}</script>
-  <script>#{clientLibs.domo}</script>
-  <script>#{clientLibs.browserver}</script>
-  <script>
-  #{clientLibs.app}
-  </script>
-  </head>
-  <body style="background-color:#eee">
-    Loading the app... If this message doesn't go away within 10 seconds, it means that the server crashed under heavy load. Please refresh mercilessly.
-  </body>
+    <head>
+      <title>෴ browserver: a node.js HTTP server, in your browser</title>
+    </head>
+    <body style="background-color:#eee">
+      <script>#{assets.engine}</script>
+      <script>#{assets.domo}</script>
+      <script>#{assets.browserver}</script>
+      <script>http.STATUS_CODES = #{JSON.stringify http.STATUS_CODES}</script>
+      <script>#{assets.router}</script>
+      <script>#{assets.app}</script>
+    </body>
   </html>
 """
 
+http.globalAgent.maxSockets = Infinity
 httpServer = http.createServer()
 
-httpServer.on "request", (req, res) ->
-  if req.url is "/"
-    res.writeHead 200
-      "Content-Type": "text/html; charset=utf8"
-      "Content-Length": client.length
+httpServer.on "request", router
+  "/":
+    GET: (req, res) ->
+      res.writeHead 200
+        "Content-Type": "text/html; charset=utf8"
+        "Content-Length": client.length
 
-    return res.end client
-
-  res.writeHead 404
-    "Content-Type": "text/plain"
-    "Content-Length": 10
-
-  res.end "Not found\n"
+      res.end client
 
 wsServer = engine.attach httpServer
 
 browServer = new brow.Server
-  http: httpServer
-  ws: wsServer
-  host: "*.browserver.org"
+browServer.listen httpServer
+browServer.listen wsServer
 
-browServer.on "connection", (client) ->
-  count = Object.keys(this.clients).length
+updateCount = ->
+  serverCount = String Object.keys(browServer.servers).length
 
-  console.log "Client #{client.id} connected (total count: #{count})"
+  for name, server of browServer.servers
+    req = http.request
+      method: "PUT"
+      headers:
+        host: name
+        "content-type": "text/plain"
+      path: "/server-count"
 
-  client.on "error", console.log
+    req.end serverCount
 
-  client.socket.on "close", =>
-    count = Object.keys(this.clients).length
-    console.log "Client #{client.id} disconnected (total count: #{count})"
+browServer.on "connection", updateCount
+browServer.on "disconnection", updateCount
 
-  host = "#{client.id}.browserver.org"
+httpServer.listen 80, ->
+  {port, address} = do @address
 
-  opts =
-    method: "PUT"
-    headers: {host}
-    path: "/localhost"
+  console.log "now running at http://#{address}:#{port}/"
 
-  req = http.request opts
-  req.write host
-  req.end()
-
-httpServer.listen process.env.PORT, ->
-  console.log "now running at http://localhost:#{@address().port}/"
-
-process.on "uncaughtException", console.log
+# process.on "uncaughtException", (err) ->
+#   console.error err.message, err.stack
