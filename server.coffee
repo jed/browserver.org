@@ -31,7 +31,7 @@ client = Buffer """
   </html>
 """
 
-http.globalAgent.maxSockets = Infinity
+http.globalAgent?.maxSockets = Infinity
 httpServer = http.createServer()
 
 httpServer.on "request", router
