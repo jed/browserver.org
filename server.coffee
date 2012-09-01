@@ -46,7 +46,7 @@ httpServer.on "request", router
 wsServer = engine.attach httpServer
 
 browServer = new brow.Server
-browServer.listen httpServer, "*.browserver.org"
+browServer.listen httpServer, hostname: "*.browserver.org"
 browServer.listen wsServer
 
 updateCount = ->
