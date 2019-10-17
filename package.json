@@ -6,7 +6,7 @@
     "browserver": "git://github.com/jed/browserver-node.git",
     "browserver-router": "git://github.com/jed/browserver-router.git",
     "engine.io": "~0.1.2",
-    "engine.io-client": "~0.1.2",
+    "engine.io-client": "~3.4.0",
     "coffee-script": "~1.3.3"
   },
   "scripts": {
